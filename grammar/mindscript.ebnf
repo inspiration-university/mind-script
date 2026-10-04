@@ -1,0 +1,66 @@
+(* MindScript v0.1 — intentionally permissive draft grammar *)
+
+program         = { script } ;
+
+script          = identifier, "(", [ parameters ], ")", "{", { section | statement }, "}" ;
+
+parameters      = identifier, { ",", identifier } ;
+
+section         = sectionName, ":", newline, indentedBlock ;
+
+sectionName     = "PURPOSE"
+                | "REQUIRES"
+                | "NEEDS"
+                | "WHEN"
+                | "WHERE"
+                | "DO"
+                | "RETURN"
+                | "RISKS"
+                | "REPLACEMENT"
+                | "BELIEF"
+                | "BELIEFS"
+                | "OBSERVED"
+                | "ASSUMES"
+                | "LEARNED"
+                | "STATE"
+                | "VALUES" ;
+
+statement       = ifStatement
+                | whileStatement
+                | assignment
+                | scriptCall
+                | freeText ;
+
+ifStatement     = "IF", expression, ":", newline, indentedBlock,
+                  { "ELSE IF", expression, ":", newline, indentedBlock },
+                  [ "ELSE", ":", newline, indentedBlock ] ;
+
+whileStatement  = "WHILE", expression, ":", newline, indentedBlock ;
+
+expression      = term, { logicalOperator, term } ;
+logicalOperator = "AND" | "OR" ;
+
+term            = [ "NOT" ], comparison | identifier | scriptCall ;
+
+comparison      = value, comparator, value ;
+comparator      = "=" | ">" | "<" | ">=" | "<=" ;
+
+assignment      = identifier, "=", value ;
+
+scriptCall      = identifier, "(", [ arguments ], ")" ;
+arguments       = value, { ",", value } ;
+
+value           = identifier | number | string | arithmeticExpression ;
+arithmeticExpression = value, arithmeticOperator, value ;
+arithmeticOperator   = "+" | "-" | "*" | "/" ;
+
+identifier      = letter, { letter | digit } ;
+number          = digit, { digit | "." } ;
+string          = '"', { ? any character except quote ? }, '"' ;
+
+indentedBlock   = ? one or more indented MindScript lines ? ;
+freeText        = ? natural-language text allowed inside semantic sections ? ;
+
+letter          = "A"…"Z" | "a"…"z" ;
+digit           = "0"…"9" ;
+newline         = ? newline ? ;
