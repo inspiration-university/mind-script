@@ -1,0 +1,78 @@
+/**
+ * Generates unusually strong drive when reality falls far short
+ * of an important vision that still feels achievable.
+ *
+ * @purpose Convert vision/reality mismatch into motivation and action.
+ * @requires grandVision()
+ * @requires valueComparison()
+ * @requires evaluateReality()
+ * @risk impatience, excessive risk-taking, tunnel vision
+ * @replacement groundedMissionDrive()
+ * @status hypothesis
+ */
+missionImpossibleDrive(goal) {
+
+    PURPOSE:
+        close the gap between an important vision and current reality
+
+    REQUIRES:
+        grandVision(goal)
+        valueComparison()
+        evaluateReality()
+        evaluateFeasibility(goal)
+
+    NEEDS:
+        selfConfidence >= high
+        importanceOfVision >= high
+        beliefVisionIsPossible >= high
+
+    BELIEFS:
+        "The current reality is unacceptable."
+        "A much better outcome is possible."
+        "I can materially influence the outcome."
+
+    WHEN:
+        visionRealityGap > significant
+
+    WHERE:
+        importanceOfVision >= high
+        AND perceivedAgency >= medium
+
+    DO:
+        desiredReality = grandVision(goal)
+        currentReality = evaluateReality()
+        visionRealityGap = valueComparison(desiredReality, currentReality)
+        feasibility = evaluateFeasibility(goal)
+
+    IF feasibility >= plausible:
+
+        DO:
+            frustration = frustration + generateFrustration(visionRealityGap)
+            indignation = indignation + generateIndignation(visionRealityGap)
+            urgency = urgency + high
+            drive = drive + visionRealityGap * beliefVisionIsPossible
+            riskTolerance = riskTolerance + medium
+            patience = patience - medium
+
+    IF repeatedFailure AND beliefVisionIsPossible >= high:
+
+        DO:
+            persistence = persistence + high
+            effort = effort + high
+
+    RETURN:
+        missionDrive
+
+    RISKS:
+        impatience
+        tunnelVision
+        excessiveRiskTolerance
+        dismissingLegitimateConstraints
+        treatingPeopleAsObstacles
+        frustrationBecomingContempt
+        confidenceBecomingArrogance
+        burnout
+
+    REPLACEMENT:
+        groundedMissionDrive(goal)
+}
