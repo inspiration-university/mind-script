@@ -1,0 +1,29 @@
+/**
+ * Selects an accountability strategy based on the surrounding environment.
+ *
+ * @status hypothesis
+ */
+accountabilitySelector(problem) {
+
+    REQUIRES:
+        shield(problem)
+        bridge(problem)
+
+    WHEN:
+        problemDetected
+
+    IF punishmentForMistakes > high:
+
+        RETURN:
+            shield(problem)
+
+    ELSE IF psychologicalSafety > high:
+
+        RETURN:
+            bridge(problem)
+
+    ELSE:
+
+        RETURN:
+            evaluateContext(problem)
+}
