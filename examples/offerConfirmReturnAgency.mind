@@ -1,0 +1,44 @@
+/**
+ * Helps another adult while preserving their agency.
+ *
+ * @status hypothesis
+ */
+offerConfirmReturnAgency(person) {
+
+    PURPOSE:
+        help without taking ownership of another adult's decisions
+
+    WHEN:
+        potentialHarmDetected
+
+    DO:
+        dangerLevel = evaluateDanger()
+
+    IF dangerLevel = immediate:
+
+        DO:
+            intervene()
+
+        RETURN:
+            immediateProtection
+
+    ELSE:
+
+        DO:
+            adviceStatus = askIfAdviceWanted()
+
+        IF adviceStatus = requested:
+
+            DO:
+                explainPerspective()
+                understanding = confirmUnderstanding()
+
+            IF understanding = confirmed:
+                returnAgency()
+
+        ELSE:
+            returnAgency()
+
+    RETURN:
+        autonomyPreserved
+}
