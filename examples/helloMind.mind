@@ -1,0 +1,14 @@
+/**
+ * Minimal MindScript example.
+ */
+helloMind(person) {
+
+    WHEN:
+        personArrives
+
+    DO:
+        greet(person)
+
+    RETURN:
+        connectionStarted
+}
